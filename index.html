@@ -44,6 +44,19 @@
 
     socket.on("Photoresistor-value", (data) => {
       photoresistor.innerText = data;
+      let light = data / 2;
+      if (light > 255) {
+        light = 255;
+      }
+      document.body.style.transition = "1s all";
+      document.body.style.background = `rgba(${light},${
+        255 - light
+      },${light},1)`;
+    });
+
+    window.addEventListener("mousemove", (event) => {
+      let frequency = event.clientY;
+      socket.emit("frequency", frequency);
     });
 
     onButton.addEventListener("click", () => {

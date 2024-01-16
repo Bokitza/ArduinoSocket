@@ -28,6 +28,12 @@ board.on("ready", function () {
       user.emit("Photoresistor-value", this.value);
     });
 
+    user.on("frequency", (frequency) => {
+      console.log(frequency);
+      led.off();
+      led.blink(frequency);
+    });
+
     user.on("press on", () => {
       led.on();
     });
