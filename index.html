@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arduino Controller!</title>
+    <script src="https://cdn.socket.io/4.7.3/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <style>
+    body {
+      border-radius: 50px;
+      background: #001061;
+      box-shadow:
+        20px 20px 60px #000e52,
+        -20px -20px 60px #001270;
+    }
+    button {
+      border-radius: 50px;
+      background: #001061;
+      box-shadow:
+        20px 20px 60px #000e52,
+        -20px -20px 60px #001270;
+      color: white;
+      padding: 12px;
+    }
+  </style>
+  <body>
+    <input
+      id="blink-frequency"
+      placeholder="set the frequency of the led blink"
+    />
+    <button id="blink">BLINK!</button>
+    <button id="on">TURN ON!</button>
+    <button id="off">TURN OFF!</button>
+    <h1 style="color: white">This is the value of the light:</h1>
+    <h2 id="photoresistor" style="color: white"></h2>
+  </body>
+  <script>
+    const onButton = document.getElementById("on");
+    const offButton = document.getElementById("off");
+    const photoresistor = document.getElementById("photoresistor");
+    const socket = io();
+
+    socket.on("Photoresistor-value", (data) => {
+      photoresistor.innerText = data;
+    });
+
+    onButton.addEventListener("click", () => {
+      socket.emit("press on");
+    });
+
+    offButton.addEventListener("click", () => {
+      socket.emit("press off");
+    });
+  </script>
+</html>
